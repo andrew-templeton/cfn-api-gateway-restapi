@@ -1,6 +1,6 @@
 {
   "name": "cfn-api-gateway-restapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Custom::ApiGatewayRestApi | AWS CloudFormation Custom Lambda Resource | API Gateway RestApi",
   "main": "index.js",
   "scripts": {

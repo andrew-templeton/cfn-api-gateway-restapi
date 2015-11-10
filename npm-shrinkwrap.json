@@ -1,6 +1,6 @@
 {
   "name": "cfn-api-gateway-restapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "cfn-lambda": {
       "version": "0.1.1",

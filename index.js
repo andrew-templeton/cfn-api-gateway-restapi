@@ -4,7 +4,7 @@ var AWS = require('aws-sdk');
 var CfnLambda = require('cfn-lambda');
 
 var RestApiSchema = {
-  Type: 'object',
+  type: 'object',
   required: [
     'Name'
   ],
