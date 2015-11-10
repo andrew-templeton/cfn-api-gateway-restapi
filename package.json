@@ -1,0 +1,40 @@
+{
+  "name": "cfn-api-gateway-restapi",
+  "version": "0.0.1",
+  "description": "foo",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-templeton/cfn-api-gateway-restapi.git"
+  },
+  "keywords": [
+    "aws",
+    "cloudformation",
+    "lambda",
+    "backed",
+    "custom",
+    "resource",
+    "api",
+    "gateway",
+    "restapi",
+    "rest",
+    "api",
+    "APIG"
+  ],
+  "author": "Andrew Templeton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrew-templeton/cfn-api-gateway-restapi/issues"
+  },
+  "homepage": "https://github.com/andrew-templeton/cfn-api-gateway-restapi#readme",
+  "dependencies": {
+    "cfn-lambda": "0.1.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.0",
+    "mocha": "^2.3.3"
+  }
+}

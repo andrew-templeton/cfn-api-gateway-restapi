@@ -1,0 +1,128 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Custom::ApiGatewayRestApi sample template",
+  "Parameters": {
+    "RestApiCustomResourceLambdaName": {
+      "Type": "String",
+      "Default": "cfn-api-gateway-restapi",
+      "Description": "The name of the Lambda you deployed to test this stack. Defaults to repository name."
+    },
+    "RestApiName": {
+      "Type": "String",
+      "Description": "Name for the API (required). Must be unique across your account for this Region."
+    },
+    "RestApiDescription": {
+      "Type": "String",
+      "Description": "Description for the API (optional)."
+    },
+    "RestApiBaseApiId": {
+      "Type": "String",
+      "Description": "API ID (not name, not ARN) from which to clone the base for the new API (optional). WARNING: Changing this value requires full replacement."
+    }
+  },
+  "Conditions": {
+    "NoApiDescription": {
+      "Fn::Equals": [
+        "",
+        {
+          "Ref": "RestApiDescription"
+        }
+      ]
+    },
+    "NoApiBaseApiId": {
+      "Fn::Equals": [
+        "",
+        {
+          "Ref": "RestApiBaseApiId"
+        }
+      ]
+    }
+  },
+  "Resources": {
+    "MyRestApi": {
+      "Type": "Custom::ApiGatewayRestApi",   
+      "Properties": {
+        "ServiceToken": {
+          "Fn::Join": [
+            ":",
+            [
+              "arn",
+              "aws",
+              "lambda",
+              {
+                "Ref": "AWS::Region"
+              },
+              {
+                "Ref": "AWS::AccountId"
+              },
+              "function",
+              {
+                "Ref": "RestApiCustomResourceLambdaName"
+              }
+            ]
+          ]
+        },
+        "Name": {
+          "Ref": "RestApiName"
+        },
+        "Description": {
+          "Fn::If": [
+            "NoApiDescription",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "Ref": "RestApiDescription"
+            }
+          ]
+        },
+        "BaseApiId": {
+          "Fn::If": [
+            "NoApiBaseApiId",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "Ref": "RestApiBaseApiId"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "MyRestApiId": {
+      "Description": "The unique ID value across your entire account for the created API.",
+      "Value": {
+        "Ref": "MyRestApi"
+      }
+    },
+    "MyRestApiName": {
+      "Description": "The name of the created API.",
+      "Value": {
+        "Fn::GetAtt": [
+          "MyRestApi",
+          "Name"
+        ]
+      }
+    },
+    "MyRestApiDescription": {
+      "Description": "The description of the created API.",
+      "Value": {
+        "Fn::GetAtt": [
+          "MyRestApi",
+          "Description"
+        ]
+      }
+    },
+    "MyRestApiCreatedDate": {
+      "Description": "The creation date of the created API, in ISO 8601 format.",
+      "Value": {
+        "Fn::GetAtt": [
+          "MyRestApi",
+          "CreatedDate"
+        ]
+      }
+    }
+  }
+}
