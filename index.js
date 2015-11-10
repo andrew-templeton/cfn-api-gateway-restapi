@@ -21,7 +21,9 @@ var RestApiSchema = {
   }
 };
 
-exports.handler = function(event, context) {
+exports.handler = ApiGatewayRestApiHandler;
+
+function ApiGatewayRestApiHandler(event, context) {
   var ApiGatewayRestApi = CfnLambda({
     Create: Create,
     Update: Update,

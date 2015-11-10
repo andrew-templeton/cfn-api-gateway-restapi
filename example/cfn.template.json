@@ -1,11 +1,11 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Custom::ApiGatewayRestApi sample template",
+  "Description": "Custom::ApiGatewayRestApi sample template ",
   "Parameters": {
     "RestApiCustomResourceLambdaName": {
       "Type": "String",
-      "Default": "cfn-api-gateway-restapi",
-      "Description": "The name of the Lambda you deployed to test this stack. Defaults to repository name."
+      "Default": "CfnLambdaResource-ApiGatewayRestApi",
+      "Description": "The name of the Lambda you deployed to test this stack. Defaults to CfnLambdaResouce-ApiGatewayRestApi (used by insta-deploy)."
     },
     "RestApiName": {
       "Type": "String",

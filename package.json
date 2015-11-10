@@ -1,7 +1,7 @@
 {
   "name": "cfn-api-gateway-restapi",
   "version": "0.0.1",
-  "description": "foo",
+  "description": "Custom::ApiGatewayRestApi | AWS CloudFormation Custom Lambda Resource | API Gateway RestApi",
   "main": "index.js",
   "scripts": {
     "test": "node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
@@ -24,14 +24,14 @@
     "api",
     "APIG"
   ],
-  "author": "Andrew Templeton",
+  "author": "Andrew Templeton <andrw.tmplton@gmail.com> (https://github.com/andrew-templeton)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/andrew-templeton/cfn-api-gateway-restapi/issues"
   },
   "homepage": "https://github.com/andrew-templeton/cfn-api-gateway-restapi#readme",
   "dependencies": {
-    "cfn-lambda": "0.1.0"
+    "cfn-lambda": "0.1.1"
   },
   "devDependencies": {
     "istanbul": "^0.4.0",
