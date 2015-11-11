@@ -14,7 +14,8 @@ REGIONS="us-east-1 us-west-2 eu-west-1 ap-northeast-1";
 
 # Housekeeping 
 RESOURCE_TYPE='ApiGatewayRestApi';
-FULL_NAME='CfnLambdaResource-'"$RESOURCE_TYPE";
+VERSION='0-2-0';
+FULL_NAME='CfnLambdaResource-'"$RESOURCE_TYPE"'-'"$VERSION";
 ZIP_LOCATION='/tmp/'"$FULL_NAME"'.zip';
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 # Fastest way to get your Account Number.

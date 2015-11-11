@@ -4,7 +4,7 @@
   "Parameters": {
     "RestApiCustomResourceLambdaName": {
       "Type": "String",
-      "Default": "CfnLambdaResource-ApiGatewayRestApi",
+      "Default": "CfnLambdaResource-ApiGatewayRestApi-0-2-0",
       "Description": "The name of the Lambda you deployed to test this stack. Defaults to CfnLambdaResouce-ApiGatewayRestApi (used by insta-deploy)."
     },
     "RestApiName": {

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "required": [
+    "Name"
+  ],
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "BaseApiId": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}

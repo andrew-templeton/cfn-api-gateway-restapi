@@ -3,24 +3,6 @@ var AWS = require('aws-sdk');
 
 var CfnLambda = require('cfn-lambda');
 
-var RestApiSchema = {
-  type: 'object',
-  required: [
-    'Name'
-  ],
-  properties: {
-    Name: {
-      type: 'string'
-    },
-    BaseApiId: {
-      type: 'string'
-    },
-    Description: {
-      type: 'string'
-    }
-  }
-};
-
 exports.handler = ApiGatewayRestApiHandler;
 
 function ApiGatewayRestApiHandler(event, context) {
@@ -28,7 +10,7 @@ function ApiGatewayRestApiHandler(event, context) {
     Create: Create,
     Update: Update,
     Delete: Delete,
-    Validate: RestApiSchema,
+    SchemaPath: [__dirname, 'schema.json'],
     NoUpdate: NoUpdate
   });
   // Not sure if there's a better way to do this...

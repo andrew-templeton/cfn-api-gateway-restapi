@@ -1,7 +1,7 @@
 {
   "name": "cfn-api-gateway-restapi",
-  "version": "0.0.2",
-  "description": "Custom::ApiGatewayRestApi | AWS CloudFormation Custom Lambda Resource | API Gateway RestApi",
+  "version": "0.0.5",
+  "description": "AWS CloudFormation Custom Lambda Resource | API Gateway RestApi",
   "main": "index.js",
   "scripts": {
     "test": "node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/andrew-templeton/cfn-api-gateway-restapi#readme",
   "dependencies": {
-    "cfn-lambda": "0.1.1"
+    "cfn-lambda": "0.2.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.0",
