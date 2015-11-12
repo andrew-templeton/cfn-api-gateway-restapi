@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/andrew-templeton/cfn-api-gateway-restapi#readme",
   "dependencies": {
-    "cfn-lambda": "0.2.0"
+    "cfn-lambda": "0.3.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.0",
