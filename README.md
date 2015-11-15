@@ -6,7 +6,7 @@
 
 AWS CloudFormation does not support AWS API Gateway. This is a Lambda-backed custom resource to add the [AWS API Gateway's RestApi](http://docs.aws.amazon.com/apigateway/api-reference/resource/rest-api/) to CloudFormation.
 
-This package on NPM: https://www.npmjs.com/package/cfn-api-gateway-restapi
+This package on NPM: https://www.npmjs.com/package/cfn-api-gateway-restapi  
 This package on GitHub: https://www.github.com/andrew-templeton/cfn-api-gateway-restapi
 
 
@@ -41,7 +41,7 @@ This Lambda makes use of the Lambda-Backed CloudFormation Custom Resource flow m
 The way that takes 10 seconds...
     
 
-    # Have aws CLI installed + some profile $W_IAM_PERMS with Lambda and IAM perms.
+    # Have aws CLI installed + permissions for IAM and Lamdba
     $ npm run cfn-lambda-deploy
 
 
