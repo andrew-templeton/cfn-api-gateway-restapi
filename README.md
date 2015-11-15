@@ -61,7 +61,7 @@ You will have this resource installed in every supported Region globally!
   - [`ap-northeast-1` / Tokyo](https://console.aws.amazon.com/lambda/home?region=ap-northeast-1#/create?step=2)
 2. Zip this repository into `/tmp/ApiGatewayRestApi.zip`
 
-    $ cd $REPO_ROOT && zip -r /tmp/ApiGatewayRestApi.zip;
+    `$ cd $REPO_ROOT && zip -r /tmp/ApiGatewayRestApi.zip;`
 
 3. Enter a name in the Name blank. I suggest: `CfnLambdaResouce-ApiGatewayRestApi`
 4. Enter a Description (optional).
