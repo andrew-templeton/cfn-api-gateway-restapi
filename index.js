@@ -14,21 +14,23 @@ exports.handler = CfnLambda({
 });
 
 function Create(params, reply) {
-  APIG.createRestApi({
+  var params = {
     name: params.Name,
     cloneFrom: params.BaseApiId,
     description: params.Description
-  }, handleReply(reply));
+  };
+  console.log('Sending POST to API Gateway RestApi: %j', params);
+  APIG.createRestApi(params, handleReply(reply));
 }
 
-function Update(physicalId, params, oldParams, reply) {
+function Update(physicalId, freshParams, oldParams, reply) {
   // Full replace
-  if (params.BaseApiId !== oldParams.BaseApiId) {
+  if (freshParams.BaseApiId !== oldParams.BaseApiId) {
     return Delete(physicalId, null, function(deletionError) {
       if (deletionError) {
         return reply(deletionError);
       }
-      Create(params, reply);
+      Create(freshParams, reply);
     });
   }
   var params = {
@@ -38,21 +40,23 @@ function Update(physicalId, params, oldParams, reply) {
 
   ['Name', 'Description'].forEach(patch);
 
+  console.log('Sending PATCH to API Gateway RestApi: %j', params);
+
   APIG.updateRestApi(params, handleReply(reply));
 
   function patch(key) {
     var keyPath = '/' + key.toLowerCase();
-    if (params[key] === oldParams[key]) {
+    if (freshParams[key] === oldParams[key]) {
       return;
     }
     if (!oldParams[key]) {
       return params.patchOperations.push({
         op: 'add',
         path: keyPath,
-        value: params[key]
+        value: freshParams[key]
       });
     }
-    if (!params[key]) {
+    if (!freshParams[key]) {
       return params.patchOperations.push({
         op: 'remove',
         path: keyPath
@@ -61,7 +65,7 @@ function Update(physicalId, params, oldParams, reply) {
     params.patchOperations.push({
       op: 'replace',
       path: keyPath,
-      value: params[key]
+      value: freshParams[key]
     });
   }
 }
@@ -69,9 +73,11 @@ function Update(physicalId, params, oldParams, reply) {
 
 
 function Delete(physicalId, params, reply) {
-  APIG.deleteRestApi({
+  var params = {
     restApiId: physicalId
-  }, function(err, data) {
+  };
+  console.log('Sending DELETE to API Gateway RestApi: %j', params);
+  APIG.deleteRestApi(params, function(err, data) {
     // Already deleted, which is fine
     if (!err || err.statusCode === 404) {
       return reply();
