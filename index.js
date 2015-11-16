@@ -5,15 +5,7 @@ var CfnLambda = require('cfn-lambda');
 
 var APIG = new AWS.APIGateway({apiVersion: '2015-07-09'});
 
-var Create = CfnLambda.SDKAlias({
-  returnPhysicalId: 'id',
-  downcase: true,
-  api: APIG,
-  method: 'createRestApi',
-  mapKeys: {
-    BaseApiId: 'cloneFrom'
-  }
-});
+
 
 var Delete = CfnLambda.SDKAlias({
   returnPhysicalId: 'id',
@@ -32,6 +24,16 @@ exports.handler = CfnLambda({
   SchemaPath: [__dirname, 'schema.json'],
   NoUpdate: NoUpdate
 });
+
+function Create(params, reply) {
+  var params = {
+    name: params.Name,
+    cloneFrom: params.BaseApiId,
+    description: params.Description
+  };
+  console.log('Sending POST to API Gateway RestApi: %j', params);
+  APIG.createRestApi(params, handleReply(reply));
+}
 
 function Update(physicalId, freshParams, oldParams, reply) {
   // Full replace
@@ -52,13 +54,7 @@ function Update(physicalId, freshParams, oldParams, reply) {
 
   console.log('Sending PATCH to API Gateway RestApi: %j', params);
 
-  APIG.updateRestApi(params, function(err, api) {
-    if (err) {
-      console.error(err.message);
-      return reply(err);
-    }
-    reply(null, api.id);
-  });
+  APIG.updateRestApi(params, handleReply(reply));
 
   function patch(key) {
     var keyPath = '/' + key.toLowerCase();
@@ -94,4 +90,40 @@ function NoUpdate(old, fresh) {
   ].every(function(key) {
     return old[key] === fresh[key];
   });
+}
+
+function handleReply(reply) {
+  return function(err, api) {
+    if (err) {
+      console.error(err.message);
+      return reply(err);
+    }
+    seekRootResource();
+    function seekRootResource(position) {
+      APIG.getResources({
+        restApiId: api.id,
+        limit: 500,
+        position: position
+      }, function(err, data) {
+        if (err) {
+          console.error('Error while seeking root resource: %j', err);
+          return reply(err);
+        }
+        if (!(data && data.items && data.items.length)) {
+          var notFound = 'Could not find the root resource of the API!';
+          console.error(notFound);
+          return reply(notFound);
+        }
+        var rootResource = data.items.filter(function(resource) {
+          return resource.path === '/';
+        })[0];
+        if (!rootResource) {
+          return seekRootResource(data.position);
+        }
+        reply(null, api.id, {
+          RootResourceId: rootResource.id
+        });
+      });
+    }
+  };
 }

@@ -4,7 +4,7 @@
   "Parameters": {
     "RestApiCustomResourceLambdaName": {
       "Type": "String",
-      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-2-0",
+      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-3-0",
       "Description": "The name of the Lambda you deployed to test this stack."
     },
     "RestApiName": {
@@ -95,6 +95,15 @@
       "Description": "The unique ID value across your entire account for the created API.",
       "Value": {
         "Ref": "MyRestApi"
+      }
+    },
+    "MyRestApiRootResourceId": {
+      "Description": "The 10 char alphanum ID value of the root resource for the created API.",
+      "Value": {
+        "Fn::GetAtt": [
+          "MyRestApi",
+          "RootResourceId"
+        ]
       }
     }
   }
