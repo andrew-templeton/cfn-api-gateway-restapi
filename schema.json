@@ -1,17 +1,22 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "required": [
     "Name"
   ],
   "properties": {
     "Name": {
-      "type": "string"
+      "type": "string",
+      "pattern": ".+"
     },
     "BaseApiId": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[a-z0-9]{10}$"
     },
     "Description": {
-      "type": "string"
+      "type": "string",
+      "pattern": ".+"
     }
-  }
+  },
+  "additionalProperties": false
 }

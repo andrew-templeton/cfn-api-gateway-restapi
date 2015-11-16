@@ -1,11 +1,11 @@
 {
   "name": "cfn-api-gateway-restapi",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
     "cfn-lambda": {
-      "version": "0.5.0",
-      "from": "cfn-lambda@0.5.0",
-      "resolved": "https://registry.npmjs.org/cfn-lambda/-/cfn-lambda-0.5.0.tgz",
+      "version": "0.5.3",
+      "from": "cfn-lambda@0.5.3",
+      "resolved": "https://registry.npmjs.org/cfn-lambda/-/cfn-lambda-0.5.3.tgz",
       "dependencies": {
         "jayschema": {
           "version": "0.3.1",
