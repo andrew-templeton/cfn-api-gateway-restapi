@@ -6,13 +6,13 @@
 
 AWS CloudFormation does not support AWS API Gateway. This is a Lambda-backed custom resource to add the [AWS API Gateway's RestApi](http://docs.aws.amazon.com/apigateway/api-reference/resource/rest-api/) to CloudFormation.
 
-This package on NPM: https://www.npmjs.com/package/cfn-api-gateway-restapi  
-This package on GitHub: https://www.github.com/andrew-templeton/cfn-api-gateway-restapi
+[This package on NPM](https://www.npmjs.com/package/cfn-api-gateway-restapi)  
+[This package on GitHub](https://www.github.com/andrew-templeton/cfn-api-gateway-restapi)
 
 
 ## Implementation
 
-This Lambda makes use of the Lambda-Backed CloudFormation Custom Resource flow module, `cfn-lambda` ([GitHub](https://github.com/andrew-templeton/cfn-lambda) / [npm](https://www.npmjs.com/package/cfn-lambda)).
+This Lambda makes use of the Lambda-Backed CloudFormation Custom Resource flow module, `cfn-lambda` ([GitHub](https://github.com/andrew-templeton/cfn-lambda) / [NPM](https://www.npmjs.com/package/cfn-lambda)).
 
 
 ## Usage
@@ -39,7 +39,6 @@ This Lambda makes use of the Lambda-Backed CloudFormation Custom Resource flow m
 #### Using the Provided Instant Install Script
 
 The way that takes 10 seconds...
-    
 
     # Have aws CLI installed + permissions for IAM and Lamdba
     $ npm run cfn-lambda-deploy
@@ -75,8 +74,6 @@ You will have this resource installed in every supported Region globally!
 12. Copy and paste the [`./execution-policy.json`](./execution-policy.json) document.
 13. Hit "Allow". The window will close. Go back to the first window if you are not already there.
 14. Click "Create Function". Finally, done! Now go to [Usage](#usage) or see [the example template](./example.template.json). Next time, stick to the instant deploy script.
-
-
 
 
 #### Miscellaneous

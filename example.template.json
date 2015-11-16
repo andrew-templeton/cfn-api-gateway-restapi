@@ -4,8 +4,8 @@
   "Parameters": {
     "RestApiCustomResourceLambdaName": {
       "Type": "String",
-      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-1-3",
-      "Description": "The name of the Lambda you deployed to test this stack. Defaults to CfnLambdaResouce-ApiGatewayRestApi (used by insta-deploy)."
+      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-2-0",
+      "Description": "The name of the Lambda you deployed to test this stack."
     },
     "RestApiName": {
       "Type": "String",
@@ -95,33 +95,6 @@
       "Description": "The unique ID value across your entire account for the created API.",
       "Value": {
         "Ref": "MyRestApi"
-      }
-    },
-    "MyRestApiName": {
-      "Description": "The name of the created API.",
-      "Value": {
-        "Fn::GetAtt": [
-          "MyRestApi",
-          "Name"
-        ]
-      }
-    },
-    "MyRestApiDescription": {
-      "Description": "The description of the created API.",
-      "Value": {
-        "Fn::GetAtt": [
-          "MyRestApi",
-          "Description"
-        ]
-      }
-    },
-    "MyRestApiCreatedDate": {
-      "Description": "The creation date of the created API, in ISO 8601 format.",
-      "Value": {
-        "Fn::GetAtt": [
-          "MyRestApi",
-          "CreatedDate"
-        ]
       }
     }
   }

@@ -5,6 +5,26 @@ var CfnLambda = require('cfn-lambda');
 
 var APIG = new AWS.APIGateway({apiVersion: '2015-07-09'});
 
+var Create = CfnLambda.SDKAlias({
+  returnPhysicalId: 'id',
+  downcase: true,
+  api: APIG,
+  method: 'createRestApi',
+  mapKeys: {
+    BaseApiId: 'cloneFrom'
+  }
+});
+
+var Delete = CfnLambda.SDKAlias({
+  returnPhysicalId: 'id',
+  downcase: true,
+  ignoreErrorCodes: [404],
+  physicalIdAs: 'restApiId',
+  keys: ['restApiId'],
+  api: APIG,
+  method: 'deleteRestApi'
+});
+
 exports.handler = CfnLambda({
   Create: Create,
   Update: Update,
@@ -12,16 +32,6 @@ exports.handler = CfnLambda({
   SchemaPath: [__dirname, 'schema.json'],
   NoUpdate: NoUpdate
 });
-
-function Create(params, reply) {
-  var params = {
-    name: params.Name,
-    cloneFrom: params.BaseApiId,
-    description: params.Description
-  };
-  console.log('Sending POST to API Gateway RestApi: %j', params);
-  APIG.createRestApi(params, handleReply(reply));
-}
 
 function Update(physicalId, freshParams, oldParams, reply) {
   // Full replace
@@ -42,7 +52,13 @@ function Update(physicalId, freshParams, oldParams, reply) {
 
   console.log('Sending PATCH to API Gateway RestApi: %j', params);
 
-  APIG.updateRestApi(params, handleReply(reply));
+  APIG.updateRestApi(params, function(err, api) {
+    if (err) {
+      console.error(err.message);
+      return reply(err);
+    }
+    reply(null, api.id);
+  });
 
   function patch(key) {
     var keyPath = '/' + key.toLowerCase();
@@ -70,22 +86,6 @@ function Update(physicalId, freshParams, oldParams, reply) {
   }
 }
 
-
-
-function Delete(physicalId, params, reply) {
-  var params = {
-    restApiId: physicalId
-  };
-  console.log('Sending DELETE to API Gateway RestApi: %j', params);
-  APIG.deleteRestApi(params, function(err, data) {
-    // Already deleted, which is fine
-    if (!err || err.statusCode === 404) {
-      return reply();
-    }
-    reply(err.message);
-  });
-}
-
 function NoUpdate(old, fresh) {
   return [
     'Name',
@@ -94,24 +94,4 @@ function NoUpdate(old, fresh) {
   ].every(function(key) {
     return old[key] === fresh[key];
   });
-}
-
-
-
-function handleReply(reply) {
-  return function(err, api) {
-    if (err) {
-      console.error(err.message);
-      return reply(err);
-    }
-    reply(null, api.id, {
-      Name: api.name,
-      Description: api.description,
-      CreatedDate: api.createdDate
-    });
-  }
-}
-
-function currentRegion(context) {
-  return context.invokedFunctionArn.match(/^arn:aws:lambda:(\w+-\w+-\d+):/)[1];
 }
