@@ -4,7 +4,7 @@
   "Parameters": {
     "RestApiCustomResourceLambdaName": {
       "Type": "String",
-      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-3-2",
+      "Default": "CfnLambdaResource-cfn-api-gateway-restapi-0-3-3",
       "Description": "The name of the Lambda you deployed to test this stack."
     },
     "RestApiName": {
