@@ -18,6 +18,10 @@ exports.handler = CfnLambda({
   Create: Create,
   Update: Update,
   Delete: Delete,
+  TriggersReplacement: ['BaseApiId'],
+  NoUpdate: function(physicalId, params, reply) {
+    SeekRootResource(physicalId, reply);
+  },
   SchemaPath: [__dirname, 'schema.json']
 });
 
@@ -32,15 +36,7 @@ function Create(params, reply) {
 }
 
 function Update(physicalId, freshParams, oldParams, reply) {
-  // Full replace
-  if (freshParams.BaseApiId !== oldParams.BaseApiId) {
-    return Delete(physicalId, null, function(deletionError) {
-      if (deletionError) {
-        return reply(deletionError);
-      }
-      Create(freshParams, reply);
-    });
-  }
+
   var params = {
     restApiId: physicalId,
     patchOperations: []
@@ -78,38 +74,40 @@ function Update(physicalId, freshParams, oldParams, reply) {
   }
 }
 
+function SeekRootResource(apiId, reply, position) {
+  APIG.getResources({
+    restApiId: apiId,
+    limit: 500,
+    position: position
+  }, function(err, data) {
+    if (err) {
+      console.error('Error while seeking root resource: %j', err);
+      return reply(err);
+    }
+    if (!(data && data.items && data.items.length)) {
+      var notFound = 'Could not find the root resource of the API!';
+      console.error(notFound);
+      return reply(notFound);
+    }
+    var rootResource = data.items.filter(function(resource) {
+      return resource.path === '/';
+    })[0];
+    if (!rootResource) {
+      return SeekRootResource(apiId, reply, data.position);
+    }
+    reply(null, apiId, {
+      RootResourceId: rootResource.id
+    });
+  });
+}
+
 function handleReply(reply) {
   return function(err, api) {
     if (err) {
       console.error(err.message);
       return reply(err);
     }
-    seekRootResource();
-    function seekRootResource(position) {
-      APIG.getResources({
-        restApiId: api.id,
-        limit: 500,
-        position: position
-      }, function(err, data) {
-        if (err) {
-          console.error('Error while seeking root resource: %j', err);
-          return reply(err);
-        }
-        if (!(data && data.items && data.items.length)) {
-          var notFound = 'Could not find the root resource of the API!';
-          console.error(notFound);
-          return reply(notFound);
-        }
-        var rootResource = data.items.filter(function(resource) {
-          return resource.path === '/';
-        })[0];
-        if (!rootResource) {
-          return seekRootResource(data.position);
-        }
-        reply(null, api.id, {
-          RootResourceId: rootResource.id
-        });
-      });
-    }
+    console.log('Got data back from API Gateway: %j', api);
+    SeekRootResource(api.id, reply);
   };
 }
