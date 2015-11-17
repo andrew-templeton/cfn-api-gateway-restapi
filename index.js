@@ -1,11 +1,8 @@
 
 var AWS = require('aws-sdk');
-
 var CfnLambda = require('cfn-lambda');
 
 var APIG = new AWS.APIGateway({apiVersion: '2015-07-09'});
-
-
 
 var Delete = CfnLambda.SDKAlias({
   returnPhysicalId: 'id',
@@ -21,8 +18,7 @@ exports.handler = CfnLambda({
   Create: Create,
   Update: Update,
   Delete: Delete,
-  SchemaPath: [__dirname, 'schema.json'],
-  NoUpdate: NoUpdate
+  SchemaPath: [__dirname, 'schema.json']
 });
 
 function Create(params, reply) {
@@ -80,16 +76,6 @@ function Update(physicalId, freshParams, oldParams, reply) {
       value: freshParams[key]
     });
   }
-}
-
-function NoUpdate(old, fresh) {
-  return [
-    'Name',
-    'Description',
-    'BaseApiId'
-  ].every(function(key) {
-    return old[key] === fresh[key];
-  });
 }
 
 function handleReply(reply) {
