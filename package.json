@@ -1,6 +1,6 @@
 {
   "name": "cfn-api-gateway-restapi",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "AWS CloudFormation Custom Lambda Resource | API Gateway RestApi",
   "main": "index.js",
   "scripts": {
@@ -32,10 +32,6 @@
   },
   "homepage": "https://github.com/andrew-templeton/cfn-api-gateway-restapi#readme",
   "dependencies": {
-    "cfn-lambda": "0.6.0"
-  },
-  "devDependencies": {
-    "istanbul": "^0.4.0",
-    "mocha": "^2.3.3"
+    "cfn-lambda": "0.6.1"
   }
 }
