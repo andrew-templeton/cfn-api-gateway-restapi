@@ -49,23 +49,7 @@ function Update(physicalId, freshParams, oldParams, reply) {
   APIG.updateRestApi(params, handleReply(reply));
 
   function patch(key) {
-    var keyPath = '/' + key.toLowerCase();
-    if (freshParams[key] === oldParams[key]) {
-      return;
-    }
-    if (!oldParams[key]) {
-      return params.patchOperations.push({
-        op: 'add',
-        path: keyPath,
-        value: freshParams[key]
-      });
-    }
-    if (!freshParams[key]) {
-      return params.patchOperations.push({
-        op: 'remove',
-        path: keyPath
-      });
-    }
+    var keyPath = '/' + key[0].toLowerCase() + key.slice(1, key.length);
     params.patchOperations.push({
       op: 'replace',
       path: keyPath,
